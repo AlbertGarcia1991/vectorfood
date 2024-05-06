@@ -26,6 +26,8 @@ hide_img_fs = '''
 <style>
 button[title="View fullscreen"]{
     visibility: hidden;}
+button[title="Link"]{
+    visibility: hidden;}
 </style>
 '''
 
@@ -41,7 +43,7 @@ if query:
     {
         "$vectorSearch" : {
             "queryVector": query_embedded,
-            "path": "title_emdedding",
+            "path": "title_embedding",
             "numCandidates": 100,
             "limit": 1,
             "index": "title_search"
@@ -58,9 +60,9 @@ if query:
     header_title = st.header(results["title"])
     
     subheader_ingredients = st.subheader("INGREDIENTS")
-    for ing in results["quantities"]:
+    for ing in eval(results["quantities"]):
         st.markdown(f"- {ing}")
     
     subheader_instructions = st.subheader("INSTRUCTIONS")
-    for idx, step in enumerate(results["instructions"]):
+    for idx, step in enumerate(eval(results["instructions"])):
         st.markdown(f"**{idx + 1}.** {step}")
