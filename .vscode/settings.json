@@ -1,4 +1,5 @@
 {
+    "terminal.integrated.fontFamily": "'0xProto Nerd Font'",
     "[git-commit]": {
         "editor.rulers": [50]
     },
