@@ -2,12 +2,14 @@
 Streamlit app
 """
 import os
-import time
 from typing import List, Union
 
 import pymongo
 from sentence_transformers import SentenceTransformer
 import streamlit as st
+
+
+st.set_page_config(page_title="VectorFood", page_icon=None, layout="centered", initial_sidebar_state="auto", menu_items=None)
 
 
 # HF Embedding
@@ -20,7 +22,7 @@ def vectors_get_embedding_minilm(text: Union[List[str], str]) -> List[float]:
         text (Union[List[str], str]): Text or list of texts to embed.
 
     Returns:
-        List[float]: List containing the 284 embedded float values.
+        List[float]: List containing the 384 embedded float values.
     """
     model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
     return model.encode(text).tolist()
@@ -48,6 +50,36 @@ button[title="Link"]{
 '''
 st.markdown(HIDE_IMG_HTML, unsafe_allow_html=True)  # Hide header image's expand button
 
+
+footer="""<style>
+a:link , a:visited{
+color: blue;
+background-color: transparent;
+text-decoration: underline;
+}
+
+a:hover,  a:active {
+color: orange;
+background-color: transparent;
+text-decoration: underline;
+}
+
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: white;
+color: black;
+text-align: center;
+}
+</style>
+<div class="footer">
+<p>Developed with ❤ by <a style='display: block; text-align: center;' href="https://github.com/AlbertGarcia1991/vectorfood" target="_blank">Albert Garcia Plaza</a></p>
+</div>
+"""
+st.markdown(footer,unsafe_allow_html=True)
+
 if query:
     header_title.empty()
     subheader_ingredients.empty()
@@ -65,12 +97,6 @@ if query:
         }  
     }
     ]).next()
-    # latest_iteration = st.empty()
-    # bar = st.progress(0)
-    # for i in range(100):
-    #     bar.progress(i + 1)
-    #     time.sleep(0.01)
-    # bar.empty()
 
     header_title = st.header(results["title"])
     
